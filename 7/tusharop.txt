@@ -1,0 +1,45 @@
+tushar@tushar:~$ g++ tushar.cpp
+tushar@tushar:~$ ./a.out
+how many dataset do you want:-4
+Enter chills value:-yes
+Enter chills value:-yes
+Enter chills value:-no
+Enter chills value:-no
+Enter runnynose value:-no
+Enter runnynose value:-yes
+Enter runnynose value:-no
+Enter runnynose value:-yes
+Enter headache value:-mild
+Enter headache value:-no
+Enter headache value:-strong
+Enter headache value:-mild
+Enter fever value:-yes
+Enter fever value:-no
+Enter fever value:-yes
+Enter fever value:-yes
+Enter flu value:-no
+Enter flu value:-yes
+Enter flu value:-yes
+Enter flu value:-yes
+
+no.of YES are:-3
+no.of NO are:-1
+total no of values:-4
+X1/C=0.75
+X2/C=0.25
+count5=1
+count11=1
+class1=0.75
+x1=0.333333
+x3=0.333333
+x5=0.333333
+x7=0.666667
+value of p1 is=0.0185185
+class2=0.25
+x2=1
+x4=1
+x6=1
+x8=1
+ value of p2 is=0.25
+flu notushar@tushar:~$ ./startup.sh
+

@@ -1,0 +1,354 @@
+#include<iostream>
+#include<string.h>
+using namespace std;
+class apriori
+{
+	int trans[5][11],i,j,l,min_sup,cnt1,cnt2,count[11],count1[11];
+	int products,transaction;
+	public:
+	void accept();
+	void pass1();
+	void pass2();
+	void pass3();
+};
+struct tran
+{
+	char st[20];
+	char st1[20];
+	char st2[20];
+	int countt;
+}s[50],s1[50],s2[50],s3[20],s4[20];
+void apriori::accept()
+{	
+	cout<<"\n***************************************************\n";
+	cout<<"Enter Total no of product : ";
+	cin>>products;
+	cout<<"Enter Total no of Transaction : ";
+	cin>>transaction;
+	for(i=0;i<products;i++)
+	{
+		cout<<"\nEnter Product "<<i<<" : ";
+		cin>>s[i].st;
+	}  
+	cout<<"\n";
+	cout<<"\n***************************************************\n";
+	for(i=0;i<products;i++)
+	cout<<s[i].st<<"\t";
+	cout<<"\nEnter Transaction\n";
+	for(i=0;i<transaction;i++)
+		for(j=0;j<products;j++)
+			cin>>trans[i][j];
+	cout<<"\n***************************************************\n";
+	cout<<"\nInitial Input is\n";
+	for(i=0;i<transaction;i++)
+	{
+		for(j=0;j<products;j++)
+		{
+			
+			if(trans[i][j]==1)
+			{
+				switch(j)
+				{
+				case 0:cout<<s[j].st<<"\t";
+				break;
+				case 1:cout<<s[j].st<<"\t";
+				break;
+				case 2:cout<<s[j].st<<"\t";
+				break;
+				case 3:cout<<s[j].st<<"\t";
+				break;
+				case 4:cout<<s[j].st<<"\t";
+				break;
+				case 5:cout<<s[j].st<<"\t";
+				break;
+				case 6:cout<<s[j].st<<"\t";
+				break;
+				case 7:cout<<s[j].st<<"\t";
+				break;
+				case 8:cout<<s[j].st<<"\t";
+				break;
+				case 9:cout<<s[j].st<<"\t";
+				break;
+				case 10:cout<<s[j].st<<"\t";
+				break;
+				}
+			}
+		}cout<<"\n";
+	}
+	cout<<"\n***************************************************\n";
+	cout<<"\nEnter Min_Sup : ";
+	cin>>min_sup;
+}
+void apriori::pass1()
+{
+	cnt1=0;
+	for(i=0;i<products;i++)
+		count[i]=0;
+	for(i=0;i<transaction;i++)
+	{
+		for(j=0;j<products;j++)
+		{
+			if(trans[i][j]==1)
+				count[j]=count[j]+1;
+		}
+	}
+	l=0;
+	cout<<"\n***************************************************\n";
+	cout<<"\nAfter Completion Of First Pass\n";
+	cout<<"\n***************************************************\n";
+	for(j=0;j<products;j++)
+	{	
+		if(count[j]>=min_sup)
+		{		
+			cnt1=cnt1+1;
+			strcpy(s1[l].st,s[j].st);
+			l=l+1;
+			cout<<s[j].st<<"  :  "<<count[j]<<"\n";
+		}	
+	}
+	cout<<"\n***************************************************\n";
+}
+
+void apriori::pass2()
+{
+	cnt2=0;
+	int flag;
+	i=0;
+		for(int k=0;k<cnt1-1;k++)
+		{
+			for(int m=k+1;m<cnt1;m++)
+			{	cnt2=cnt2+1;
+				strcpy(s2[i].st,s1[k].st);
+				
+				strcpy(s2[i].st1,s1[m].st);
+				s2[i].countt=0;
+				i=i+1;
+			}
+		}
+	
+	for(int m=0;m<cnt2;m++)
+	{
+	   for(i=0;i<transaction;i++)
+	   {
+		flag=0;
+		for(j=0;j<products;j++)
+		{
+			if(trans[i][j]==1)
+			{
+				if(strcmp(s2[m].st,s[j].st)==0||strcmp(s2[m].st1,s[j].st)==0)
+				flag=flag+1;
+			}
+		}
+		if(flag==2)
+		{	
+			flag=0;
+			s2[m].countt=s2[m].countt+1;
+		}
+	   }	
+	}
+	cout<<"\n***************************************************\n";
+	cout<<"\nAfter Completion Of Second Pass\n";
+	cout<<"\n***************************************************\n";
+	l=cnt1=0;
+	for(j=0;j<cnt2;j++)
+	{	
+		if(s2[j].countt>=min_sup)
+		{		
+			cnt1=cnt1+1;
+			strcpy(s3[l].st,s2[j].st);
+			strcpy(s3[l].st1,s2[j].st1);
+			l=l+1;
+			cout<<s2[j].st<<"  "<<s2[j].st1<<" : "<<s2[j].countt<<"\n";
+		}
+		
+	}
+	cout<<"\n***************************************************\n";
+}
+void apriori::pass3()
+{
+	cnt2=0;
+	int flag;
+	i=0;
+	for(int k=0;k<cnt1-1;k++)
+	{	
+		for(int m=k+1;m<cnt1;m++)
+		{	cnt2=cnt2+1;
+			if(strcmp(s3[k].st,s3[m].st)==0)
+			{
+				strcpy(s4[i].st,s3[k].st);
+				strcpy(s4[i].st1,s3[k].st1);
+				strcpy(s4[i].st2,s3[m].st1);	
+			}
+			else if(strcmp(s3[k].st,s3[m].st1)==0)
+			{
+				strcpy(s4[i].st,s3[k].st);
+				strcpy(s4[i].st1,s3[k].st1);
+				strcpy(s4[i].st2,s3[m].st);	
+			}
+			else if(strcmp(s3[k].st1,s3[m].st)==0)
+			{
+				strcpy(s4[i].st,s3[k].st);
+				strcpy(s4[i].st1,s3[k].st1);
+				strcpy(s4[i].st2,s3[m].st1);	
+			}
+			else if(strcmp(s3[k].st1,s3[m].st1)==0)
+			{
+				strcpy(s4[i].st,s3[k].st);
+				strcpy(s4[i].st1,s3[k].st1);
+				strcpy(s4[i].st2,s3[m].st);	
+			}
+			s4[i].countt=0;
+			i=i+1;
+		}
+	}
+
+	for(int m=0;m<cnt2;m++)
+	{
+	   for(i=0;i<transaction;i++)
+	   {
+		flag=0;
+		for(j=0;j<products;j++)
+		{
+			if(trans[i][j]==1)
+			{
+				if(strcmp(s4[m].st,s[j].st)==0||strcmp(s4[m].st1,s[j].st)==0||strcmp(s4[m].st2,s[j].st)==0)
+				flag=flag+1;
+			}
+		}
+		if(flag==3)
+		{	
+			flag=0;
+			s4[m].countt=s4[m].countt+1;
+		}
+	   }	
+	}
+	l=cnt1=0;
+	for(i=0;i<cnt2-1;i++)//remove duplicate entris.
+	{
+		for(j=i+1;j<cnt2;j++)
+		{
+			if(strcmp(s4[i].st,s4[j].st)==0||strcmp(s4[i].st,s4[j].st1)==0||strcmp(s4[i].st,s4[j].st2)==0)	
+			if(strcmp(s4[i].st1,s4[j].st)==0||strcmp(s4[i].st1,s4[j].st1)==0||strcmp(s4[i].st1,s4[j].st2)==0)	
+			if(strcmp(s4[i].st2,s4[j].st)==0||strcmp(s4[i].st2,s4[j].st1)==0||strcmp(s4[i].st2,s4[j].st2)==0)	
+			{
+				strcpy(s4[j].st,s3[j+1].st);
+				strcpy(s4[j].st1,s3[j+1].st1);
+				strcpy(s4[j].st2,s3[j+1].st);
+				s4[j].countt=s4[j+1].countt;		
+			}
+			
+		}
+		
+	}
+	cout<<"\n***************************************************\n";
+	cout<<"\nAfter Completion Of Third Pass\n";
+	cout<<"\n***************************************************\n";
+	for(j=0;j<cnt2;j++)
+	{	
+		if(s4[j].countt>=min_sup)
+		{		
+			cout<<s4[j].st<<"  "<<s4[j].st1<<"  "<<s4[j].st2<<" : "<<s4[j].countt<<"\n";
+		}
+		
+	}
+	cout<<"\n***************************************************\n";	
+}
+int main()
+{
+	apriori obj;
+	obj.accept();
+	obj.pass1();
+	obj.pass2();
+	obj.pass3();
+	return 0;
+}
+/*
+OUTPUT
+ganesh@ganesh-Compaq-15-Notebook-PC:~$ c++ apriori.cpp
+ganesh@ganesh-Compaq-15-Notebook-PC:~$ ./a.out
+
+***************************************************
+Enter Total no of product : 11
+Enter Total no of Transaction : 5
+
+Enter Product 0 : Mango
+
+Enter Product 1 : Onion
+
+Enter Product 2 : Jar
+
+Enter Product 3 : Keychain
+
+Enter Product 4 : Eggs
+
+Enter Product 5 : Chocolate
+
+Enter Product 6 : Nuts
+
+Enter Product 7 : Apple
+
+Enter Product 8 : Knife
+
+Enter Product 9 : Toothbrush
+
+Enter Product 10 : Corns
+
+
+***************************************************
+Mango	Onion	Jar	Keychain	Eggs	Chocolate	Nuts	Apple	Knife	Toothbrush	Corns	
+Enter Transaction
+1 1 1 1 1 1 0 0 0 0 0
+0 1 1 1 1 1 1 0 0 0 0
+1 0 0 1 1 0 0 1 0 0 0
+1 0 0 1 0 1 0 0 0 1 1
+0 1 0 1 1 0 0 0 1 0 1
+
+***************************************************
+
+Initial Input is
+Mango	Onion	Jar	Keychain	Eggs	Chocolate	
+Onion	Jar	Keychain	Eggs	Chocolate	Nuts	
+Mango	Keychain	Eggs	Apple	
+Mango	Keychain	Chocolate	Toothbrush	Corns	
+Onion	Keychain	Eggs	Knife	Corns	
+
+***************************************************
+
+Enter Min_Sup : 3
+
+***************************************************
+
+After Completion Of First Pass
+
+***************************************************
+Mango  :  3
+Onion  :  3
+Keychain  :  5
+Eggs  :  4
+Chocolate  :  3
+
+***************************************************
+
+***************************************************
+
+After Completion Of Second Pass
+
+***************************************************
+Mango  Keychain : 3
+Onion  Keychain : 3
+Onion  Eggs : 3
+Keychain  Eggs : 4
+Keychain  Chocolate : 3
+
+***************************************************
+
+***************************************************
+
+After Completion Of Third Pass
+
+***************************************************
+Onion  Keychain  Eggs : 3
+
+***************************************************
+ganesh@ganesh-Compaq-15-Notebook-PC:~$ */
+

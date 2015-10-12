@@ -1,0 +1,169 @@
+
+
+#include<iostream>
+#include<string.h>
+#include<math.h>
+using namespace std;
+class KNN
+{
+	private :
+		struct st
+		{
+			char instututed[20];
+			char ycate[20];
+			int a,b,sq,rank;
+		}s[10],s1;
+		int n,i,j;
+	public :
+		void insert();
+		void display();
+		void calc();
+}k;
+void KNN::insert()
+{
+	cout<<"\nEnter how many parameters u want : ";
+	cin>>n;
+	cout<<"\nEnter X1 : ";
+	for(i=0;i<n;i++)
+	{
+		cin>>s[i].a;
+	}
+	cout<<"\nEnter X2 : ";
+	for(i=0;i<n;i++)
+	{
+		cin>>s[i].b;
+	}
+	cout<<"\nEnter Classification(good/bad) : ";
+	for(i=0;i<n;i++)
+	{
+		cin>>s[i].ycate;
+	}
+}
+void KNN::display()
+{	
+	cout<<"\nX1\tX2\tSQ.Distance\tRank min.dist\t Instituted in 3 NN\t Y Categories of NN\n";
+	cout<<"\n------------------------\n";	
+	for(i=0;i<n;i++)
+	{
+		if(i<3)
+		{
+		cout<<"\n"<<s[i].a<<"\t"<<s[i].b<<"\t"<<s[i].sq<<"\t\t"<<i+1<<"\t"<<"YES"<<"\t"<<s[i].ycate<<"\n";
+		}
+	
+	}
+}
+void KNN::calc()
+{
+	int x,y,pa[20],pb[20],j;
+	int sa[20],sb[20],add[20];
+	cout<<"\nEnter square distance (X and Y): ";
+	cin>>x>>y;
+	for(i=0;i<n;i++)
+	{
+		sa[i]=s[i].a-x;
+		sb[i]=s[i].b-y;
+		pa[i]=pow(sa[i],2);
+		pb[i]=pow(sb[i],2);
+		s[i].sq=pa[i]+pb[i];
+		cout<<"\n"<<s[i].sq<<endl;
+	}
+	cout<<"\nRanking to the nearest distance : ";
+	for(i=0;i<n;i++)
+	{
+		for(j=0;j<n-1;j++)
+		{
+			if(s[j].sq>s[j+1].sq)
+			{
+				s1.sq=s[j].sq;
+				s1.a=s[j].a;
+				s1.b=s[j].b;
+				strcpy(s1.ycate,s[j].ycate);
+
+				s[j].sq=s[j+1].sq;
+				s[j].a=s[j+1].a;
+				s[j].b=s[j+1].b;
+				strcpy(s[j].ycate,s[j+1].ycate);
+
+				s[j+1].sq=s1.sq;
+				s[j+1].a=s1.a;
+				s[j+1].b=s1.b;
+				strcpy(s[j+1].ycate,s1.ycate);	
+			}
+		}
+	}
+	for(i=0;i<n;i++)
+	{
+		cout<<"\n "<<s[i].sq<<"\t"<<i+1;
+	}
+	
+	cout<<"\nvalue of k is : "<<x; 
+	cout<<"\nIt is include in "<<x<<" nearest neighbour : ";
+	x=s[0].sq;
+	for(i=0;i<n;i++)
+	{
+		if(s[i].sq<x)
+		{
+			x=s[i].sq;
+		}
+	}
+	cout<<"Yess"<<x;
+	
+}	
+
+		
+int main()
+{
+	k.insert();
+	k.calc();
+	k.display();
+	return 0;
+}
+/*
+OutPut:-
+
+[student@localhost ~]$ c++ knn.cpp
+^[[A[student@localhost ~]$ ./a.out
+
+Enter how many parameters u want : 4
+
+Enter X1 : 7
+7
+3
+1
+
+Enter X2 : 7
+4 4 4
+
+Enter Classification(good/bad) : b
+b
+g
+g
+
+Enter square distance (X and Y): 3
+7
+
+16
+
+25
+
+9
+
+13
+
+Ranking to the nearest distance : 
+ 9	1
+ 13	2
+ 16	3
+ 25	4
+value of k is : 3
+It is include in 3 nearest neighbour : Yess9
+X1	X2	SQ.Distance	Rank min.dist	 Instituted in 3 NN	 Y Categories of NN
+
+------------------------
+
+3	4	9		1	YES	g
+
+1	4	13		2	YES	g
+
+7	7	16		3	YES	b
+[student@localhost ~]$ */

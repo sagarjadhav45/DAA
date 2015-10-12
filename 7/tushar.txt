@@ -1,0 +1,206 @@
+#include<iostream>
+#include<string.h>
+using namespace std;
+
+struct index
+{
+char chills[30];
+char runnynose[30];
+char headache[30];
+char fever[30];
+char  flu[30];
+}tushar[50];
+
+
+int main()
+{
+
+int i,n;
+char ch,rn,hd,fe,fl;
+float class1,class2;
+float x1,x2,x3,x4,x5,x6,x7,x8;
+float p1,p2;
+float count1,count2,count,count4,count5,count6,count9;
+float count10,count11,count12;
+cout<<"how many dataset do you want:-";
+cin>>n;
+for(i=0;i<n;i++)
+{
+cout<<"Enter chills value:-";
+cin>>tushar[i].chills;
+}
+for(i=0;i<n;i++)
+{
+cout<<"Enter runnynose value:-";
+cin>>tushar[i].runnynose;
+}
+for(i=0;i<n;i++)
+{
+cout<<"Enter headache value:-";
+cin>>tushar[i].headache;
+}
+for(i=0;i<n;i++)
+{
+cout<<"Enter fever value:-";
+cin>>tushar[i].fever;
+}
+for(i=0;i<n;i++)
+{
+cout<<"Enter flu value:-";
+cin>>tushar[i].flu;
+}
+/*
+cout<<"Enter our query:-";
+cin>>"chills:-">>ch;
+
+cin>>"runnynose:-">>rn;
+
+cin>>"headache:-">>hd;
+cin>>"fever:-">>fe;
+cin>>"flu:-">>fl;
+*/
+for(int i=0;i<20;i++)
+{
+if(strcmp(tushar[i].flu,"yes")==0)
+{
+count++;
+}
+if(strcmp(tushar[i].flu,"no")==0)
+{
+count1++;
+}
+}
+cout<<"\nno.of YES are:-"<<count;
+cout<<"\nno.of NO are:-"<<count1;
+cout<<"\ntotal no of values:-"<<n;
+
+class1=count/n;
+cout<<"\nX1/C="<<class1;
+class2=count1/n;
+cout<<"\nX2/C="<<class2;
+
+int count3;
+
+for(int i=0;i<20;i++)
+{
+if(strcmp(tushar[i].chills,"yes")==0 && strcmp(tushar[i].flu,"yes")==0)
+{
+count3++;
+}
+}
+
+for(int i=0;i<20;i++)
+{
+if(strcmp(tushar[i].chills,"yes")==0 && strcmp(tushar[i].flu,"no")==0)
+{
+count9++;
+}
+}
+
+
+x1= count3/count;
+x2= count9/count1;
+
+
+for(int i=0;i<20;i++)
+{
+if(strcmp(tushar[i].runnynose,"no")==0 && strcmp(tushar[i].flu,"yes")==0)
+{
+count4++;
+}
+}
+
+
+for(int i=0;i<20;i++)
+{
+if(strcmp(tushar[i].runnynose,"no")==0 && strcmp(tushar[i].flu,"no")==0)
+{
+count10++;
+}
+}
+
+x3=count4/count;
+x4=count10/count1;
+
+
+for(int i=0;i<20;i++)
+{
+if(strcmp(tushar[i].headache,"mild")==0 && strcmp(tushar[i].flu,"yes")==0)
+{
+count5++;
+}
+}
+
+for(int i=0;i<20;i++)
+{
+if(strcmp(tushar[i].headache,"mild")==0 && strcmp(tushar[i].flu,"no")==0)
+{
+count11++;
+}
+}
+x5=count5/count;
+cout<<"\ncount5="<<count5;
+x6=count11/count1;
+cout<<"\ncount11="<<count11;
+
+
+for(int i=0;i<20;i++)
+{
+if(strcmp(tushar[i].fever,"yes")==0 && strcmp(tushar[i].flu,"yes")==0)
+{
+count6++;
+}
+}
+for(int i=0;i<20;i++)
+{
+if(strcmp(tushar[i].fever,"yes")==0 && strcmp(tushar[i].flu,"no")==0)
+{
+count12++;
+}
+}
+
+x7=count6/count;
+x8=count12/count1;
+
+
+p1=( class1 * x1 * x3 * x5 * x7 );
+cout<<"\nclass1="<<class1<<"\nx1="<<x1<<"\nx3="<<x3<<"\nx5="<<x5<<"\nx7="<<x7;
+cout<<"\nvalue of p1 is="<<p1;
+p2=( class2 * x2 * x4 * x6 * x8 );
+cout<<"\nclass2="<<class2<<"\nx2="<<x2<<"\nx4="<<x4<<"\nx6="<<x6<<"\nx8="<<x8;
+cout<<"\n value of p2 is="<<p2; 
+if(p1>p2)
+{
+cout<<"\nflu yes";
+}
+else
+{
+cout<<"\nflu no";
+}
+
+
+return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
